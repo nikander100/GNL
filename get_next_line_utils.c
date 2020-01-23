@@ -6,7 +6,7 @@
 /*   By: nvan-der <nvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 18:44:59 by nvan-der       #+#    #+#                */
-/*   Updated: 2020/01/17 19:51:11 by nvan-der      ########   odam.nl         */
+/*   Updated: 2020/01/23 13:29:51 by nvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,30 @@ size_t		ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strdup(const char *s1)
+char			*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int		size;
-	int		i;
-	char	*ret;
+	size_t	i;
+	size_t	slen;
+	char	*result;
 
 	i = 0;
-	size = ft_strlen(s1);
-	ret = malloc(sizeof(char) * size + 1);
-	if (ret == NULL)
+	if (s == NULL)
 		return (NULL);
-	while (i < size)
+	slen = ft_strlen(s);
+	if (start > ft_strlen((char *)s))
+		return (ft_strdup("", NULL, 0));
+	if (slen - start < len)
+		len = slen - start;
+	result = malloc((len + 1) * sizeof(char));
+	if (result == NULL)
+		return (NULL);
+	while (i < len)
 	{
-		ret[i] = s1[i];
+		result[i] = s[start + i];
 		i++;
 	}
-	ret[i] = '\0';
-	return (ret);
+	result[len] = '\0';
+	return (result);
 }
 
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize)

@@ -6,7 +6,7 @@
 /*   By: nvan-der <nvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 18:44:57 by nvan-der       #+#    #+#                */
-/*   Updated: 2020/01/17 19:18:19 by nvan-der      ########   odam.nl         */
+/*   Updated: 2020/01/23 13:26:49 by nvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *str);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-char	*ft_strdup(const char *s1);
+char	*ft_strdup(const char *s1, char *temp, int value);
 int		get_next_line(int fd, char **line);
 
 #endif
