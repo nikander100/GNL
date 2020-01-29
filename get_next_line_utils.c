@@ -6,7 +6,7 @@
 /*   By: nvan-der <nvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 18:44:59 by nvan-der       #+#    #+#                */
-/*   Updated: 2020/01/29 17:46:00 by nvan-der      ########   odam.nl         */
+/*   Updated: 2020/01/29 18:15:52 by nvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ char		*ft_substr(char const *s, unsigned int start, size_t len)
 		len = slen - start;
 	result = malloc(sizeof(char) * (len + 1));
 	if (result == NULL)
+	{
+		free((char *)s);
 		return (NULL);
+	}
 	ft_strlcpy(result, s + start, len + 1);
 	result[len] = '\0';
 	free((char *)s);
@@ -93,7 +96,10 @@ char		*ft_strjoin(char *s1, char *s2)
 	sizestr++;
 	result = malloc(sizeof(char) * sizestr);
 	if (result == NULL)
+	{
+		free(s1);
 		return (NULL);
+	}
 	ft_strlcpy(result, s1, sizestr);
 	ft_strlcat(result, s2, sizestr);
 	if (s1)

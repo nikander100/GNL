@@ -6,7 +6,7 @@
 /*   By: nvan-der <nvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 18:45:01 by nvan-der       #+#    #+#                */
-/*   Updated: 2020/01/29 17:45:46 by nvan-der      ########   odam.nl         */
+/*   Updated: 2020/01/29 18:18:09 by nvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,21 +114,20 @@ int				get_next_line(int fd, char **line)
 	return (ret);
 }
 
-/*
-**int main(void)
-**{
-**	char *line;
-**	int fd;
-**
-**	line = "";
-**	fd = open("test.txt", O_RDONLY);
-**	int i = 1;
-**	while (i > 0)
-**	{
-**		i = get_next_line(fd, &line);
-**		printf("%d = ", i);
-**		printf("%s\n", line);
-**		free(line);
-**	}
-**}
-*/
+
+int main(void)
+{
+	char *line;
+	int fd;
+
+	line = "";
+	fd = open("test.txt", O_RDONLY);
+	int i = 1;
+	while (i > 0)
+	{
+		i = get_next_line(fd, &line);
+		printf("%d = ", i);
+		printf("%s\n", line);
+		free(line);
+	}
+}
