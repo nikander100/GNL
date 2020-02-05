@@ -6,7 +6,7 @@
 /*   By: nvan-der <nvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 18:45:01 by nvan-der       #+#    #+#                */
-/*   Updated: 2020/01/29 18:18:09 by nvan-der      ########   odam.nl         */
+/*   Updated: 2020/02/05 14:24:02 by nvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,119 +15,136 @@
 #include <stdio.h>
 #include <limits.h>
 
-static int		find_next_line(const char *remainder)
+char			*ft_strchr(char *s, int c)
 {
-	size_t i;
-
-	i = 0;
-	while (remainder[i] != '\0')
-	{
-		if (remainder[i] == '\n')
-			return (i);
-		i++;
-	}
-	return (i);
-}
-
-char			*ft_strdup(const char *s1, char *temp, int value)
-{
-	int		size;
-	int		i;
+	size_t	i;
 	char	*ret;
 
-	if (value == 1)
-		free(temp);
-	size = 0;
 	i = 0;
-	size = ft_strlen(s1);
-	ret = malloc(sizeof(char) * size + 1);
-	if (ret == NULL)
+	if (s == NULL)
 		return (NULL);
-	while (i < size)
-	{
-		ret[i] = s1[i];
-		i++;
-	}
-	ret[i] = '\0';
-	return (ret);
-}
-
-static char		*ft_strchr(const char *s, int c, char *remainder)
-{
-	size_t i;
-
-	i = 0;
-	free(remainder);
-	while (s[i] != 0)
+	while (s[i] != '\0')
 	{
 		if (s[i] == c)
-			return (ft_strdup(s + i + 1, NULL, 0));
+		{
+			ret = ft_strdup(s + i + 1);
+			if (ret == NULL)
+			{
+				free(s);
+				return (0);
+			}
+			free(s);
+			return (ret);
+		}
 		i++;
 	}
-	return (NULL);
+	return (0);
 }
 
-static int		gnl_loop(int fd, char **line, char *temp, int ret)
+int				ft_check_fd(char *s)
 {
-	static char		buff[BUFFER_SIZE + 1];
-	static char		*remainder;
+	int		i;
 
-	if (remainder != NULL)
-		temp = ft_strdup(remainder, temp, 1);
-	if (temp == NULL)
-		return (-1);
+	i = 0;
+	if (s == NULL)
+		return (0);
+	while (s[i] != '\0')
+	{
+		if (s[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char			*ft_read_fd(char **temp, int fd, ssize_t ret)
+{
+	char	*buf;
+
 	while (ret > 0)
 	{
-		ret = read(fd, buff, BUFFER_SIZE);
-		if (ret == -1)
-			return (-1);
-		buff[ret] = '\0';
-		temp = ft_strjoin(temp, buff);
-		if (temp == NULL)
-			return (-1);
-		remainder = ft_strchr(temp, '\n', remainder);
-		if (remainder != NULL)
+		buf = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (buf == NULL)
 		{
-			*line = ft_substr(temp, 0, find_next_line(temp));
-			return ((*line == NULL) ? -1 : 1);
+			free(temp[fd]);
+			return (NULL);
 		}
+		ret = read(fd, buf, BUFFER_SIZE);
+		if (ret < 0)
+		{
+			free(buf);
+			free(temp[fd]);
+			return (NULL);
+		}
+		buf[ret] = '\0';
+		temp[fd] = ft_strjoin(temp[fd], buf);
+		if (temp[fd] == NULL)
+			return (NULL);
+		if (ft_check_fd(temp[fd]))
+			break ;
 	}
-	*line = ft_substr(temp, 0, ft_strlen(temp));
-	return ((*line == NULL) ? -1 : ret);
+	return (temp[fd]);
+}
+
+int				ft_make_line(char **temp, char **line, int fd)
+{
+	int		i;
+
+	i = 0;
+	while (temp[fd][i] != '\n' && temp[fd][i] != '\0')
+		i++;
+	if (temp[fd][i] == '\n')
+	{
+		*line = ft_substr(temp[fd]);
+		if (*line == NULL)
+		{
+			free(temp[fd]);
+			return (-1);
+		}
+		temp[fd] = ft_strchr(temp[fd], '\n');
+		if (temp[fd] == NULL)
+			return (-1);
+		return (1);
+	}
+	*line = ft_strdup(temp[fd]);
+	free(temp[fd]);
+	if (*line == NULL)
+		return (-1);
+	temp[fd] = 0;
+	return (0);
 }
 
 int				get_next_line(int fd, char **line)
 {
-	int		ret;
-	char	*temp;
+	ssize_t		ret;
+	static char	*temp[INT_MAX];
 
-	temp = ft_strdup("", NULL, 0);
-	if (fd < 0 || !line || BUFFER_SIZE < 1 || temp == NULL || fd > FOPEN_MAX)
-	{
-		if (temp)
-			free(temp);
+	ret = 1;
+	if (fd < 0 || !line || BUFFER_SIZE <= 0 || fd > OPEN_MAX)
 		return (-1);
-	}
-	ret = gnl_loop(fd, line, temp, 1);
-	if (ret == -1)
-		free(temp);
-	return (ret);
+	if (temp[fd] == NULL)
+		temp[fd] = ft_strdup("");
+	if (temp[fd] == NULL)
+		return (-1);
+	temp[fd] = ft_read_fd(temp, fd, ret);
+	if (temp[fd] == NULL)
+		return (-1);
+	return (ft_make_line(temp, line, fd));
 }
 
+// int main(void)
+// {
+// 	char *line;
+// 	int fd;
 
-int main(void)
-{
-	char *line;
-	int fd;
-
-	line = "";
-	fd = open("test.txt", O_RDONLY);
-	int i = 1;
-	while (i > 0)
-	{
-		i = get_next_line(fd, &line);
-		printf("%d = ", i);
-		printf("%s\n", line);
-		free(line);
-	}
-}
+// 	line = "";
+// 	fd = open("test.txt", O_RDONLY);
+// 	int i = 1;
+// 	while (i > 0)
+// 	{
+// 		i = get_next_line(fd, &line);
+// 		printf("%d = ", i);
+// 		printf("%s\n", line);
+// 		free(line);
+// 	}
+// }
