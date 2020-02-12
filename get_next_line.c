@@ -6,7 +6,7 @@
 /*   By: nvan-der <nvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/17 18:45:01 by nvan-der       #+#    #+#                */
-/*   Updated: 2020/02/05 14:24:02 by nvan-der      ########   odam.nl         */
+/*   Updated: 2020/02/12 14:42:00 by nvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,19 +132,19 @@ int				get_next_line(int fd, char **line)
 	return (ft_make_line(temp, line, fd));
 }
 
-// int main(void)
-// {
-// 	char *line;
-// 	int fd;
+int main(void)
+{
+	char *line;
+	int fd;
 
-// 	line = "";
-// 	fd = open("test.txt", O_RDONLY);
-// 	int i = 1;
-// 	while (i > 0)
-// 	{
-// 		i = get_next_line(fd, &line);
-// 		printf("%d = ", i);
-// 		printf("%s\n", line);
-// 		free(line);
-// 	}
-// }
+	line = "";
+	fd = open("test.txt", O_RDONLY);
+	int i = 1;
+	while (i > 0)
+	{
+		i = get_next_line(fd, &line);
+		printf("%d = ", i);
+		printf("%s\n", line);
+		free(line);
+	}
+}
