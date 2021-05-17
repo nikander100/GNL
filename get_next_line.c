@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: nvan-der <nvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/17 18:45:01 by nvan-der       #+#    #+#                */
-/*   Updated: 2020/02/12 14:42:00 by nvan-der      ########   odam.nl         */
+/*   Created: 2020/01/17 18:45:01 by nvan-der      #+#    #+#                 */
+/*   Updated: 2021/05/17 11:30:35 by nvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <limits.h>
 
-char			*ft_strchr(char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	size_t	i;
 	char	*ret;
@@ -41,7 +41,7 @@ char			*ft_strchr(char *s, int c)
 	return (0);
 }
 
-int				ft_check_fd(char *s)
+int	ft_check_fd(char *s)
 {
 	int		i;
 
@@ -57,13 +57,13 @@ int				ft_check_fd(char *s)
 	return (0);
 }
 
-char			*ft_read_fd(char **temp, int fd, ssize_t ret)
+char	*ft_read_fd(char **temp, int fd, ssize_t ret)
 {
 	char	*buf;
 
 	while (ret > 0)
 	{
-		buf = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (buf == NULL)
 		{
 			free(temp[fd]);
@@ -86,7 +86,7 @@ char			*ft_read_fd(char **temp, int fd, ssize_t ret)
 	return (temp[fd]);
 }
 
-int				ft_make_line(char **temp, char **line, int fd)
+int	ft_make_line(char **temp, char **line, int fd)
 {
 	int		i;
 
@@ -114,7 +114,7 @@ int				ft_make_line(char **temp, char **line, int fd)
 	return (0);
 }
 
-int				get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	ssize_t		ret;
 	static char	*temp[INT_MAX];
@@ -132,19 +132,20 @@ int				get_next_line(int fd, char **line)
 	return (ft_make_line(temp, line, fd));
 }
 
-int main(void)
-{
-	char *line;
-	int fd;
+// TEST FUNCTION
+// int	main(void)
+// {
+// 	char *line;
+// 	int fd;
 
-	line = "";
-	fd = open("test.txt", O_RDONLY);
-	int i = 1;
-	while (i > 0)
-	{
-		i = get_next_line(fd, &line);
-		printf("%d = ", i);
-		printf("%s\n", line);
-		free(line);
-	}
-}
+// 	line = "";
+// 	fd = open("test.txt", O_RDONLY);
+// 	int i = 1;
+// 	while (i > 0)
+// 	{
+// 		i = get_next_line(fd, &line);
+// 		printf("%d = ", i);
+// 		printf("%s\n", line);
+// 		free(line);
+// 	}
+// }

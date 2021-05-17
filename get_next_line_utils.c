@@ -5,16 +5,16 @@
 /*                                                     +:+                    */
 /*   By: nvan-der <nvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/17 18:44:59 by nvan-der       #+#    #+#                */
-/*   Updated: 2020/02/05 14:29:12 by nvan-der      ########   odam.nl         */
+/*   Created: 2020/01/17 18:44:59 by nvan-der      #+#    #+#                 */
+/*   Updated: 2021/05/17 11:31:33 by nvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t		ft_strlen(char *s)
+size_t	ft_strlen(char *s)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (s == NULL)
@@ -24,7 +24,7 @@ size_t		ft_strlen(char *s)
 	return (i);
 }
 
-char		*ft_substr(char *s)
+char	*ft_substr(char *s)
 {
 	char	*ret;
 	int		i;
@@ -36,7 +36,7 @@ char		*ft_substr(char *s)
 		return (NULL);
 	while (s[i] != '\n' && s[i] != '\0')
 		i++;
-	ret = (char*)malloc(sizeof(char) * (i + 1));
+	ret = (char *)malloc(sizeof(char) * (i + 1));
 	if (ret == NULL)
 		return (NULL);
 	while (j < i)
@@ -48,7 +48,7 @@ char		*ft_substr(char *s)
 	return (ret);
 }
 
-char		*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*result;
 	size_t	str_size;
@@ -67,13 +67,13 @@ char		*ft_strjoin(char *s1, char *s2)
 	return (result);
 }
 
-char		*ft_strdup(char *s)
+char	*ft_strdup(char *s)
 {
 	int		i;
 	char	*ret;
 
 	i = ft_strlen(s);
-	ret = (char*)malloc(sizeof(char) * (i + 1));
+	ret = (char *)malloc(sizeof(char) * (i + 1));
 	if (ret == NULL)
 		return (NULL);
 	i = 0;
@@ -86,7 +86,7 @@ char		*ft_strdup(char *s)
 	return (ret);
 }
 
-char		*ft_cpy_cat(char *ori, char *app, char *ret)
+char	*ft_cpy_cat(char *ori, char *app, char *ret)
 {
 	int		i;
 	int		j;
